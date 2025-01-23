@@ -1,12 +1,16 @@
 import http from "http";
 
-import homeView from "./views/home/index.html.js";
 import siteCss from "./content/styles/site.css.js";
+import homeView from "./views/home/index.html.js";
+import addBreedView from "./views/addBreed.html.js";
+import addCatView from "./views/addCat.html.js";
 
 const server = http.createServer((request, response) => {
   console.log("HTTP Request");
 
-  if (request.url === "/styles/site.css") {
+  const url = request.url;
+
+  if (url === "/styles/site.css") {
     response.writeHead(200, {
       "content-type": "text/css",
     });
@@ -16,7 +20,25 @@ const server = http.createServer((request, response) => {
     return response.end();
   }
 
-  response.write(homeView);
+  if (url === "/") {
+    response.writeHead(200, {
+      "content-type": "text/html",
+    });
+
+    response.write(homeView);
+  } else if (url === "/cats/add-breed") {
+    response.writeHead(200, {
+      "content-type": "text/html",
+    });
+
+    response.write(addBreedView);
+  } else if (url === "/cats/add-cat") {
+    response.writeHead(200, {
+      "content-type": "text/html",
+    });
+
+    response.write(addCatView);
+  }
 
   response.end();
 });
